@@ -16,7 +16,7 @@ if ($parsed_url != false){
     $snappy = new Pdf('xvfb-run -s \'-screen 0 1100x1024x16\' -a wkhtmltopdf');
     
     $snappy->setOption('lowquality', false);
-    // $snappy->setOption('disable-javascript', true);
+    $snappy->setOption('disable-javascript', true);
     $snappy->setOption('disable-smart-shrinking', false);
     $snappy->setOption('print-media-type', true);
     check_get_params($snappy);
