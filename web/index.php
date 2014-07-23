@@ -12,9 +12,9 @@ if ($parsed_url != false){
     if (!isset($parsed_url['scheme'])){
         $url = 'http://' . $_GET['url'];
     }
-    
+
     $snappy = new Pdf('xvfb-run -s \'-screen 0 1100x1024x16\' -a wkhtmltopdf');
-    
+
     $snappy->setOption('lowquality', false);
     $snappy->setOption('disable-javascript', true);
     $snappy->setOption('disable-smart-shrinking', false);
@@ -27,11 +27,13 @@ if ($parsed_url != false){
         $snappy->setOption('margin-right', $_GET['margin']);
         $snappy->setOption('margin-left', $_GET['margin']);
     }
-    
+
     // Display the resulting pdf in the browser
     // by setting the Content-type header to pdf
-    // header('Content-Disposition: attachment; filename="file.pdf"');
     header('Content-Type: application/pdf');
+    if (isset($_GET['ddl'])) {
+        header('Content-Disposition: attachment; filename="'.$_GET['ddl'].'.pdf"');
+    }
     echo $snappy->getOutput($url);
 }
 else{
