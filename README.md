@@ -4,7 +4,7 @@ README
 What is pdf-generator ?
 ------------------
 
-Simple webservice to generate pdf from html using library wkhtml library.
+Simple webservice to generate pdf from html using wkhtml library.
 Basically there is only one file in this project, it takes in parameter an url and directly outputs the pdf content in the answer.
 
 Installation
