@@ -36,10 +36,9 @@ if ($parsed_url != false){
     if (isset($_GET['cmyk'])) {
         // Convert pdf in CMYK colorspace
         // Need GhostScript
-        // Need a writeable /tmp directory
-        $rand_id = rand();
-        $tmpRGBFileName = '/tmp/temppdf-rgb-'.$rand_id.'.pdf';
-        $tmpCMYKFileName = '/tmp/temppdf-cmyk-'.$rand_id.'.pdf';
+        // Need a writeable temporary directory for php process
+        $tmpRGBFileName = tempnam(sys_get_temp_dir(), 'pdf-rgb');
+        $tmpCMYKFileName = tempnam(sys_get_temp_dir(), 'pdf-cmyk');
         
         // Write snappy RGB output in file
         $tmpRGBFile = fopen($tmpRGBFileName,'wb');
