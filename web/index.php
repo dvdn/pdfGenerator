@@ -54,11 +54,10 @@ if ($parsed_url != false){
         $cmykOutput = fread($tmpCMYKFile, filesize($tmpCMYKFileName));
         fclose($tmpCMYKFile);
         echo $cmykOutput;
-    }    
 
         //Cleanup temporary files
-        
-        
+        unlink($tmpRGBFileName);
+        unlink($tmpCMYKFileName);
     } else {
         echo $snappy->getOutput($url);
     }
