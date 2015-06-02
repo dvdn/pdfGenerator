@@ -52,14 +52,14 @@ Wkhtml has many parameters to refine the pdf generation as you can see here:
 
 ``http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html``
 
-All these parameters may be passed to the webservice:
+All these parameters may be sent to the webservice:
 
 ``http://localhost/pdfGenerator/web/index.php?url=google.fr&orientation=landscape&zoom=2``
 
 Options
 -------------
 
-Optionnal url get parameters could be send to pdfGenerator:
+Optionnal url get parameters could be sent to pdfGenerator:
 
 * __margin__ : Will set CSS document sheet margin
 * __cmyk__ : When set to 1 or True, the returned pdf will use CMYK colorspace (usefull for offset or Web professionnal printers)
