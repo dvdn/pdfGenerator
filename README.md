@@ -62,7 +62,7 @@ Options
 Optionnal url get parameters could be send to pdfGenerator:
 
 * __margin__ : Will set CSS document sheet margin
-* __cmyk__ : When set to 1 or True, the returned pdf will use CMYK colorspace (usefull for offset or Web proffessionnal printers)
+* __cmyk__ : When set to 1 or True, the returned pdf will use CMYK colorspace (usefull for offset or Web professionnal printers)
 
 Additionnaly all wkhtmltopdf options are available (See http://wkhtmltopdf.org/usage/wkhtmltopdf.txt)
 Several options have an overloaded default value :
