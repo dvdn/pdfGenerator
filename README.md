@@ -16,13 +16,16 @@ sudo apt-get install wkhtmltopdf
 2. Package xvfb : X Server used by wkhtmltopdf.
 sudo apt-get install xvfb
 
-3. Get project on git
+3. _(OPTIONNAL)_ Package Ghostscript : Ghostscript is mandatory for option cmyk=1 (CMYK pdf output)
+sudo apt-get install ghostscript
+
+4. Get project on git
 git clone http://hg.prod.canaltp.fr/ctp/pdfGenerator.git
 
 5. Run composer
 composer.phar install
 
-4. Use it!
+6. Use it!
 
 Requirements
 -------------
@@ -32,16 +35,42 @@ knplabs/knp-snappy: https://github.com/KnpLabs/snappy
 Usage
 -------------
 
-call index.php and give in parameter the url to convert into pdf.
+Call index.php and give in parameter the url to convert into pdf.
 Example (without vhost):
-http://localhost/pdfGenerator/web/index.php?url=http://www.example.org
+
+``http://localhost/pdfGenerator/web/index.php?url=http://www.example.org``
+
 You can also omit the scheme (AKA the protocol)
-http://localhost/pdfGenerator/web/index.php?url=google.fr
+
+``http://localhost/pdfGenerator/web/index.php?url=google.fr``
+
 If your url contains GET parameters, you need to encode it (using encodeURIComponent for instance) so it will look like this
-http://localhost/pdfGenerator/web/index.php?url=https%3A%2F%2Fwww.phpbb.com%2Fabout%2Ffeatures%2F%3Ffrom%3Dsubmenu
-Wkhtml has many parameters to refine the pdf generation as you can see here: http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html
+
+``http://localhost/pdfGenerator/web/index.php?url=https%3A%2F%2Fwww.phpbb.com%2Fabout%2Ffeatures%2F%3Ffrom%3Dsubmenu``
+
+Wkhtml has many parameters to refine the pdf generation as you can see here:
+
+``http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html``
+
 All these parameters may be passed to the webservice:
-http://localhost/pdfGenerator/web/index.php?url=google.fr&orientation=landscape&zoom=2
+
+``http://localhost/pdfGenerator/web/index.php?url=google.fr&orientation=landscape&zoom=2``
+
+Options
+-------------
+
+Optionnal url get parameters could be send to pdfGenerator:
+
+* __margin__ : Will set CSS document sheet margin
+* __cmyk__ : When set to 1 or True, the returned pdf will use CMYK colorspace (usefull for offset or Web proffessionnal printers)
+
+Additionnaly all wkhtmltopdf options are available (See http://wkhtmltopdf.org/usage/wkhtmltopdf.txt)
+Several options have an overloaded default value :
+
+* __lowquality__ : false
+* __disable-javascript__ : true
+* __disable-smart-shrinking__ : true
+* __print-media-type__ : true
 
 Remarks
 -------------
