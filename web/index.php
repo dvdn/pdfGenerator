@@ -27,12 +27,40 @@ if ($parsed_url != false){
         $snappy->setOption('margin-right', $_GET['margin']);
         $snappy->setOption('margin-left', $_GET['margin']);
     }
-    
+
     // Display the resulting pdf in the browser
     // by setting the Content-type header to pdf
     // header('Content-Disposition: attachment; filename="file.pdf"');
     header('Content-Type: application/pdf');
-    echo $snappy->getOutput($url);
+
+    // Convert pdf in CMYK colorspace
+    // Need GhostScript
+    // Need a writeable temporary directory for php process
+    if (isset($_GET['cmyk']) && $_GET['cmyk'] === 1) {
+        
+        $tmpRGBFileName = tempnam(sys_get_temp_dir(), 'pdf-rgb');
+        $tmpCMYKFileName = tempnam(sys_get_temp_dir(), 'pdf-cmyk');
+        
+        // Write snappy RGB output in file
+        $tmpRGBFile = fopen($tmpRGBFileName,'wb');
+        fwrite($tmpRGBFile,$snappy->getOutput($url));
+        fclose($tmpRGBFile);
+        
+        // Convert to CMYK with GhostScript command
+        exec('gs -o '.$tmpCMYKFileName.' -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK -sColorConversionStrategyForImages=CMYK '.$tmpRGBFileName);
+        
+        //Display output in stream
+        $tmpCMYKFile = fopen($tmpCMYKFileName,'rb');
+        $cmykOutput = fread($tmpCMYKFile, filesize($tmpCMYKFileName));
+        fclose($tmpCMYKFile);
+        echo $cmykOutput;
+
+        //Cleanup temporary files
+        unlink($tmpRGBFileName);
+        unlink($tmpCMYKFileName);
+    } else {
+        echo $snappy->getOutput($url);
+    }
 }
 else{
     throw new Exception("$url is not a valid url.");
