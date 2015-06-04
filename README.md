@@ -13,8 +13,8 @@ Installation
 1. Package wkhtml : C++ lib which converts html into pdf. Uses WebKit as render engine.
 sudo apt-get install wkhtmltopdf
 
-2. Package xvfb : X Server used by wkhtmltopdf.
-sudo apt-get install xvfb
+2. Package xvfb : X Server used by wkhtmltopdf
+sudo apt-get install xvfb xauth
 
 3. _(OPTIONNAL)_ Package Ghostscript : Ghostscript is mandatory for option cmyk=1 (CMYK pdf output)
 sudo apt-get install ghostscript
