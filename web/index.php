@@ -12,9 +12,9 @@ if ($parsed_url != false){
     if (!isset($parsed_url['scheme'])){
         $url = 'http://' . $_GET['url'];
     }
-    
+
     $snappy = new Pdf('xvfb-run -s \'-screen 0 1100x1024x16\' -a wkhtmltopdf');
-    
+
     $snappy->setOption('lowquality', false);
     $snappy->setOption('disable-javascript', true);
     $snappy->setOption('disable-smart-shrinking', false);
@@ -30,8 +30,13 @@ if ($parsed_url != false){
 
     // Display the resulting pdf in the browser
     // by setting the Content-type header to pdf
-    // header('Content-Disposition: attachment; filename="file.pdf"');
     header('Content-Type: application/pdf');
+    
+    // Download file instead of viewing it in the browser
+    if (isset($_GET['ddl'])) {
+        $filename = (empty($_GET['ddl']))? 'file' : $_GET['ddl'];
+        header('Content-Disposition: attachment; filename="'.$filename.'.pdf"');
+    }
 
     // Convert pdf in CMYK colorspace
     // Need GhostScript
