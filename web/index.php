@@ -20,6 +20,17 @@ if ($parsed_url != false){
     $snappy->setOption('disable-smart-shrinking', false);
     $snappy->setOption('print-media-type', true);
     check_get_params($snappy);
+
+    // Page size (international ISO standard : Letter, A0, A1, A2, ...)
+    if (isset($_GET['page-size'])) {
+        $snappy->setOption('page-size', $_GET['page-size']);
+    }
+
+    // Page orientation (portrait,landscape)
+    if (isset($_GET['orientation'])) {
+        $snappy->setOption('orientation', $_GET['orientation']);
+    }
+
     if (isset($_GET['margin']))
     {
         $snappy->setOption('margin-bottom', $_GET['margin']);
@@ -31,7 +42,7 @@ if ($parsed_url != false){
     // Display the resulting pdf in the browser
     // by setting the Content-type header to pdf
     header('Content-Type: application/pdf');
-    
+
     // Download file instead of viewing it in the browser
     if (isset($_GET['ddl'])) {
         $filename = (empty($_GET['ddl']))? 'file' : $_GET['ddl'];
@@ -42,18 +53,18 @@ if ($parsed_url != false){
     // Need GhostScript
     // Need a writeable temporary directory for php process
     if (isset($_GET['cmyk']) && $_GET['cmyk'] === 1) {
-        
+
         $tmpRGBFileName = tempnam(sys_get_temp_dir(), 'pdf-rgb');
         $tmpCMYKFileName = tempnam(sys_get_temp_dir(), 'pdf-cmyk');
-        
+
         // Write snappy RGB output in file
         $tmpRGBFile = fopen($tmpRGBFileName,'wb');
         fwrite($tmpRGBFile,$snappy->getOutput($url));
         fclose($tmpRGBFile);
-        
+
         // Convert to CMYK with GhostScript command
         exec('gs -o '.$tmpCMYKFileName.' -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK -sColorConversionStrategyForImages=CMYK '.$tmpRGBFileName);
-        
+
         //Display output in stream
         $tmpCMYKFile = fopen($tmpCMYKFileName,'rb');
         $cmykOutput = fread($tmpCMYKFile, filesize($tmpCMYKFileName));
