@@ -20,7 +20,7 @@ sudo apt-get install xvfb xauth
 sudo apt-get install ghostscript
 
 4. Get project on git
-git clone http://hg.prod.canaltp.fr/ctp/pdfGenerator.git
+git clone git@github.com:CanalTP/pdfGenerator.git
 
 5. Run composer
 composer.phar install
