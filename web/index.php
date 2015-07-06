@@ -41,7 +41,7 @@ if ($parsed_url != false){
     // Convert pdf in CMYK colorspace
     // Need GhostScript
     // Need a writeable temporary directory for php process
-    if (isset($_GET['cmyk']) && $_GET['cmyk'] === 1) {
+    if (isset($_GET['cmyk']) && $_GET['cmyk'] == 1) {
         
         $tmpRGBFileName = tempnam(sys_get_temp_dir(), 'pdf-rgb');
         $tmpCMYKFileName = tempnam(sys_get_temp_dir(), 'pdf-cmyk');
