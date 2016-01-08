@@ -34,7 +34,7 @@ if ($parsedUrl != false) {
     // Convert pdf in CMYK colorspace
     // Need GhostScript
     // Need a writeable temporary directory for php process
-    if (isset($_GET['cmyk']) && $_GET['cmyk'] === 1) {
+    if (filter_input(INPUT_GET, 'cmyk', FILTER_VALIDATE_BOOLEAN)) {
         $tmpRGBFileName = tempnam(sys_get_temp_dir(), 'pdf-rgb');
         $tmpCMYKFileName = tempnam(sys_get_temp_dir(), 'pdf-cmyk');
 
@@ -69,7 +69,7 @@ function checkSnappyparams($snappy)
 {
     foreach ($snappy->getOptions() as $option => $value) {
         if (isset($_GET[$option])) {
-            $optValue = checkParam($_GET[$option]);
+            $optValue = convertToBoolean($_GET[$option]);
             $snappy->setOption($option, $optValue);
         }
     }
@@ -82,11 +82,8 @@ function checkSnappyparams($snappy)
     }
 }
 
-function checkParam($param)
+function convertToBoolean($param)
 {
-    if ($param === 'true' || $param === 'false') {
-        return $param === 'true';
-    }
-
-    return $param;
+    $newParam = filter_var($param, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+    return $newParam === null ? $param : $newParam;
 }
