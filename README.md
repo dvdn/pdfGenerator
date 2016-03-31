@@ -11,26 +11,41 @@ Installation
 -------------
 
 1. Package wkhtml : C++ lib which converts html into pdf. Uses WebKit as render engine.
+
+```bash
 sudo apt-get install wkhtmltopdf
+```
 
 2. Package xvfb : X Server used by wkhtmltopdf
+
+```bash
 sudo apt-get install xvfb xauth
+```
 
 3. _(OPTIONNAL)_ Package Ghostscript : Ghostscript is mandatory for option cmyk=1 (CMYK pdf output)
+
+```bash
 sudo apt-get install ghostscript
+```
 
 4. Get project on git
+
+```bash
 git clone git@github.com:CanalTP/pdfGenerator.git
+```
 
 5. Run composer
+
+```bash
 composer.phar install
+```
 
 6. Use it!
 
 Requirements
 -------------
 
-knplabs/knp-snappy: https://github.com/KnpLabs/snappy
+``knplabs/knp-snappy: https://github.com/KnpLabs/snappy``
 
 Usage
 -------------
@@ -85,6 +100,7 @@ Securize this webservice using apache vhost, limit to a specific range of ip for
 
 TODO?
 ------------
+
 Check if the url exists and returns a valid http code?
 Add an option to enable javascript if needed?
 
