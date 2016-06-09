@@ -44,7 +44,7 @@ if ($parsedUrl != false) {
         fclose($tmpRGBFile);
 
         // Convert to CMYK with GhostScript command
-        exec('gs -o '.$tmpCMYKFileName.' -dAutoRotatePages=/None -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK -sColorConversionStrategyForImages=CMYK '.$tmpRGBFileName);
+        exec('gs -o '.$tmpCMYKFileName.' -dAutoRotatePages=/None -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK -dAutoFilterColorImages=false -dColorImageFilter=/FlateEncode '.$tmpRGBFileName);
 
         //Display output in stream
         $tmpCMYKFile = fopen($tmpCMYKFileName, 'rb');
