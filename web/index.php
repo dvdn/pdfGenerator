@@ -7,6 +7,24 @@ use Knp\Snappy\Pdf;
 $parsedUrl = parse_url($_GET['url']);
 $url = $_GET['url'];
 
+$booleanParameters = array(
+    'background', 'collate', 'custom-header-propagation', 'debug-javascript',
+    'default-header', 'disable-dotted-lines', 'disable-external-links',
+    'disable-forms', 'disable-internal-links', 'disable-javascript',
+    'disable-local-file-access', 'disable-plugins', 'disable-smart-shrinking',
+    'disable-toc-back-links', 'disable-toc-links', 'dump-default-toc-xsl',
+    'enable-external-links', 'enable-forms', 'enable-internal-links',
+    'enable-javascript', 'enable-local-file-access', 'enable-plugins',
+    'enable-smart-shrinking', 'enable-toc-back-links', 'exclude-from-outline',
+    'extended-help', 'footer-line', 'grayscale', 'header-line', 'help', 'htmldoc',
+    'images', 'include-in-outline', 'license', 'lowquality', 'manpage',
+    'no-background', 'no-collate', 'no-custom-header-propagation',
+    'no-debug-javascript', 'no-footer-line', 'no-header-line', 'no-images',
+    'no-outline', 'no-pdf-compression', 'no-print-media-type',
+    'no-stop-slow-scripts', 'outline', 'print-media-type', 'quiet',
+    'read-args-from-stdin', 'readme', 'stop-slow-scripts', 'use-xserver', 'version'
+);
+
 if ($parsedUrl != false) {
     // add http if needed
     if (!isset($parsedUrl['scheme'])) {
@@ -67,9 +85,11 @@ if ($parsedUrl != false) {
  */
 function checkSnappyparams($snappy)
 {
-    foreach ($snappy->getOptions() as $option => $value) {
+    global $booleanParameters;
+    foreach (array_keys($snappy->getOptions()) as $option) {
         if (isset($_GET[$option])) {
-            $optValue = convertToBoolean($_GET[$option]);
+            $isBooleanParam = array_search($option, $booleanParameters) !== false;
+            $optValue = $isBooleanParam ? convertToBoolean($_GET[$option]) : $_GET[$option];
             $snappy->setOption($option, $optValue);
         }
     }
